@@ -1,0 +1,12 @@
+version: '3.9'
+
+services:
+  mariadb:
+    image: mariadb:10.7
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=S3cret
+      - MYSQL_PASSWORD=An0thrS3crt
+      - MYSQL_USER=controlcoin_user
+      - MYSQL_DATABASE=controlcoin_db
