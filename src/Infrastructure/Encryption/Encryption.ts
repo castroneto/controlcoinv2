@@ -8,7 +8,7 @@ export class Encryption {
     
     async EncryptPassword(password) {
         const hash = await bcrypt.hash(password, this.salts);
-
+        return hash
     }
 
     async CompareHashes(password, hash) {

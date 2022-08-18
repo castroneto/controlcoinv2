@@ -1,7 +1,9 @@
 import { Column, Model, Table, HasOne } from 'sequelize-typescript';
 
+
+
 @Table
-export class User extends Model {
+export class User extends Model<User> {
 
   @Column
   profilePicture: string;
@@ -19,13 +21,16 @@ export class User extends Model {
   lastName: string;
 
   @Column({ defaultValue: false })
-  verified: boolean;
+  verified?: boolean;
 
   @Column({ defaultValue: true })
-  isActive: boolean;
+  isActive?: boolean;
 
   @Column({ defaultValue: false })
-  blocked: boolean;
+  blocked?: boolean;
+
+
+  
 
   
 

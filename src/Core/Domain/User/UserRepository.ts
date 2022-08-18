@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from './../../../Infrastructure/Database/Models/User';
-
+import { IUser } from './UserInterface';
 @Injectable()
 export class UserRepository {
 
@@ -22,8 +22,8 @@ export class UserRepository {
         return this.userModel.findOne({ where: { email } });
       }
 
-      register(user: User) {
-        return user.save();
+      async createUser(user: IUser) : Promise<User> {
+          return this.userModel.create(user);
       }
       
       async remove(id: string): Promise<void> {
