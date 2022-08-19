@@ -1,13 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ArrayMinSize, IsArray, IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString, IsEmail } from 'class-validator';
+import { IsNumber, IsString, IsNotEmpty } from 'class-validator';
 
 export class CardRequestDto {
 
-  @IsNumber()
+  @IsString()
   @ApiProperty()
-  expiration: Date;
+  expiration: string;
 
   @IsString()
+  @IsNotEmpty()
   @ApiProperty()
   color: string;
 
@@ -20,7 +21,7 @@ export class CardRequestDto {
 export class CardResponseDto {
   @IsNumber()
   @ApiProperty()
-  expiration: Date;
+  expiration: string;
 
   @IsString()
   @ApiProperty()

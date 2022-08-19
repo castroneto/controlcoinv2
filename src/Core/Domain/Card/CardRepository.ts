@@ -19,6 +19,14 @@ export class CardRepository {
     return this.cardModel.findOne({ where: { id } });
   }
 
+  findName(name: string): Promise<Card> {
+    return this.cardModel.findOne({ where: { name } });
+  }
+
+  findColor(color: string): Promise<Card> {
+    return this.cardModel.findOne({ where: { color } });
+  }
+
   async createCard(card: ICard): Promise<Card> {
     return this.cardModel.create(card);
   }

@@ -11,7 +11,7 @@ export class Card extends Model<Card> {
     color: string;
 
     @Column
-    expiration: Date;
+    expiration: string;
 
     @HasMany(() => Withdrawal)
     players: Withdrawal[]

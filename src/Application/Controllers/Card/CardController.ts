@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Body } from '@nestjs/common';
 import { ApiResponse,ApiParam } from '@nestjs/swagger';
 import { CardRequestDto, CardResponseDto } from '../../DTOs/Card/CardDto';
-import { UserService } from '../../../Core/ApplicationServices/UserService';
 import { CardService } from 'src/Core/ApplicationServices/CardService';
 
 
