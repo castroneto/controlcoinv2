@@ -17,5 +17,6 @@ export class LoginRequestDto {
 
 
 export class LoginResponseDto {
-
+    @ApiProperty()
+    access_token: string;
 }

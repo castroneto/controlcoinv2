@@ -13,6 +13,7 @@ async function bootstrap() {
   .setDescription('The controlcoin API description')
   .setVersion('1.0')
   .addTag('finance')
+  .addBearerAuth({ in: 'header', type: 'http' })
   .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

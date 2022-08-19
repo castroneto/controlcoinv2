@@ -1,6 +1,5 @@
-import { Column, Model, Table, HasOne } from 'sequelize-typescript';
-
-
+import { Column, Model, Table, HasOne, BeforeCreate, BeforeUpdate } from 'sequelize-typescript';
+import * as bcrypt from 'bcrypt';
 
 @Table
 export class User extends Model<User> {
@@ -29,9 +28,18 @@ export class User extends Model<User> {
   @Column({ defaultValue: false })
   blocked?: boolean;
 
+  @BeforeCreate
+  @BeforeUpdate
+  static hashPassword(user: User) {
+      if (user.password) {            
+          var salt = bcrypt.genSaltSync(10);
+          user.password = bcrypt.hashSync(user.password, salt);
+      }
+  }
 
-  
-
+  async validatePassword(password: string): Promise<boolean> {
+    return bcrypt.compare(password, this.password);
+  }
   
 
 }

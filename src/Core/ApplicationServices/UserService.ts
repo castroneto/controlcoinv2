@@ -1,12 +1,19 @@
 import { Injectable, HttpException, HttpStatus } from "@nestjs/common";
-import { Encryption } from '../../Infrastructure/Encryption/Encryption';
 import { UserRepository } from '../Domain/User/UserRepository';
 import { IUser } from "../Domain/User/UserInterface";
+
+import { JwtService } from '@nestjs/jwt';
+
 @Injectable()
 export class UserService {
 
-    constructor(public encryption: Encryption, public userRepository: UserRepository) {
+    constructor(public userRepository: UserRepository, private jwtService: JwtService) {
 
+    }
+
+
+    async getUser(id) {
+        return await this.userRepository.findOne(id);
     }
 
     async Autentication({ email, password }) {
@@ -15,8 +22,8 @@ export class UserService {
             throw new HttpException({ status: HttpStatus.UNAUTHORIZED, error: 'user not Found' }, HttpStatus.UNAUTHORIZED);
         }
 
-        let isValid = await this.encryption.CompareHashes(password, user.password);
-        if(!isValid) {
+        const isMatch = await user.validatePassword(password);
+        if(!isMatch) {
             throw new HttpException({ status: HttpStatus.UNAUTHORIZED, error: 'incorrect password' }, HttpStatus.UNAUTHORIZED);
         }
 
@@ -30,6 +37,11 @@ export class UserService {
             throw new HttpException({ status: HttpStatus.UNAUTHORIZED, error: 'user inactive' }, HttpStatus.UNAUTHORIZED);
         }
 
+        const payload = { username: user.email, sub: user.id };
+
+        return {
+            access_token: this.jwtService.sign(payload),
+        };
 
     }
 
@@ -38,9 +50,6 @@ export class UserService {
         if(query) {
             throw new HttpException({ status: HttpStatus.UNAUTHORIZED, error: 'user arealy esixts' }, HttpStatus.UNAUTHORIZED);
         }
-
-        user.password = await this.encryption.EncryptPassword(user.password);
-
         this.userRepository.createUser(user)
     }
 
