@@ -2,7 +2,7 @@ import { Column, Model, Table, DataType, ForeignKey, HasMany } from 'sequelize-t
 import { Withdrawal } from './Withdrawal';
 
 @Table
-export class Card extends Model {
+export class Card extends Model<Card> {
 
     @Column
     name: string;
